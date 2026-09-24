@@ -4,34 +4,18 @@ import Usuario
 import ReservaSala
 
 
-my_usuario =  Usuario.Usuario("programacion", "programacion")
+my_usuario =  Usuario.Usuario("programación", "programación")
 
 usuarios = []
 reservas = []
 lista_reservas = None
 
 
-reserva1 = ReservaSala.ReservaSala("Juan Luis", 10, 2000)
-reserva1.registrar_inicio(10)
-reserva1.registrar_fin(12)
-costo_total = reserva1.calcular_costo(12)
-print("Usuario de la reserva:", reserva1.obtener_usuario())
-print(f"Costo total de la reserva: ${costo_total}")
-reservas.append(reserva1)
-
-reserva2 = ReservaSala.ReservaSala("Diana", 9, 3500)
-reserva2.registrar_inicio(9)
-reserva2.registrar_fin(12)
-costo_total2 = reserva2.calcular_costo(12)
-print("Usuario de la reserva:", reserva2.obtener_usuario())
-print(f"Costo total de la reserva: ${costo_total2}")
-reservas.append(reserva2)
-
-
 def crear_reserva():
     ventana_reserva = tk.Toplevel()
     ventana_reserva.title("Create Reservation")
-    ventana_reserva.geometry("300x250")
+    ventana_reserva.geometry("400x300")
+    ventana_reserva.configure(bg="#f4e2f1")  # Set background color
 
     tk.Label(ventana_reserva, text="Enter username:").pack(pady=10)
     entry_usuario = tk.Entry(ventana_reserva)
@@ -95,7 +79,7 @@ def seleccionar_reserva():
         hora_fin = entry_hora_fin.get()
 
         if hora_fin == "":
-            messagebox.showerror("Error", "End time cannot be empty.")
+            messagebox.showerror("Error", "End time must be after start time.")
             return
 
         try:
@@ -104,8 +88,8 @@ def seleccionar_reserva():
             messagebox.showerror("Error", "Enter a valid number")
             return
 
-        if hora_fin < reserva_seleccionada.obtener_hora_inicio():
-            messagebox.showerror("Error", "End time cannot be earlier than start time.")
+        if hora_fin <= reserva_seleccionada.obtener_hora_inicio():
+            messagebox.showerror("Error", "End time must be later than start time.")
             return
 
         # Registrar la hora de fin y calcular el costo
@@ -137,8 +121,9 @@ def iniciar_sesion():
 
     if my_usuario.validar(username_ingresado, password_ingresado):
         ventana_principal = tk.Toplevel(ventana)
-        ventana_principal.title("Login")
+        ventana_principal.title("Study Room Reservations")
         ventana_principal.geometry("500x400")
+        ventana_principal.configure(bg="#f5e5f2")  # Set background color
 
         tk.Label(ventana_principal, text="Study Room Reservations").pack(pady=10)
         tk.Label(ventana_principal, text="Select a reservation:").pack(pady=5)
@@ -160,9 +145,10 @@ def iniciar_sesion():
 
 ventana = tk.Tk()
 ventana.title("Study Room")
-ventana.geometry("400x400")
+ventana.geometry("400x300")
+ventana.configure(bg="#f4e4f1")  # Set background color
 
-etiqueta = tk.Label(ventana, text="Reservas")
+etiqueta = tk.Label(ventana, text="Reservations")
 etiqueta.pack(pady=20)
 
 etiqueta_usuario = tk.Label(ventana, text="Username:")
@@ -177,7 +163,7 @@ etiqueta_password.pack(pady=5)
 entry_password = tk.Entry(ventana, show="*")
 entry_password.pack()
 
-button_login = tk.Button(ventana, text="LOGIN", command=iniciar_sesion)
+button_login = tk.Button(ventana, text="Login", command=iniciar_sesion)
 button_login.pack(pady=30)
 
 
